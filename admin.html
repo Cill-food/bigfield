@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — Pizzaria Bigfield (Painel Profissional)</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #0f0f10;
+        --card: #121213;
+        --accent: #ffb703;
+        --muted: #9aa0a6;
+        --radius: 12px;
+      }
+      * {
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        margin: 0;
+        background: linear-gradient(180deg, #0b0b0b, #0f0f10);
+        color: #fff;
+        min-height: 100vh;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 20px;
+        background: linear-gradient(90deg, #0b0b0b, #111);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+      header .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      header .brand img {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+      }
+      header h1 {
+        font-size: 1.05rem;
+        margin: 0;
+      }
+      header .meta {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 18px;
+        padding: 18px;
+        align-items: start;
+      }
+      nav.sidebar {
+        background: var(--card);
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      }
+      nav.sidebar button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        background: transparent;
+        color: #fff;
+        margin-bottom: 6px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      nav.sidebar button.active {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 183, 3, 0.12),
+          rgba(255, 183, 3, 0.06)
+        );
+        color: var(--accent);
+      }
+
+      main.panel {
+        background: transparent;
+      }
+      .card {
+        background: linear-gradient(180deg, #121213, #0f0f10);
+        padding: 14px;
+        border-radius: 12px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+        margin-bottom: 16px;
+      }
+
+      /* top controls */
+      .top-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .top-row .left {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .btn {
+        background: var(--accent);
+        color: #000;
+        border: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn.ghost {
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .input {
+        padding: 8px;
+        border-radius: 8px;
+        border: none;
+        background: #161616;
+        color: #fff;
+      }
+
+      /* grid inside main content */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 12px;
+      }
+      .map-wrap {
+        height: 420px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      #admin-map {
+        width: 100%;
+        height: 100%;
+      }
+      .config-list {
+        max-height: 420px;
+        overflow: auto;
+        padding-right: 6px;
+      }
+
+      /* neighborhoods list & tiers */
+      .list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.01);
+        margin-bottom: 8px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      label {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table th,
+      table td {
+        padding: 8px;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.03);
+        text-align: left;
+        font-size: 0.95rem;
+      }
+      .small {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      /* dashboard small */
+      .metric {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 14px;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #141414, #0f0f0f);
+      }
+      .metric h3 {
+        margin: 0;
+        color: var(--accent);
+      }
+      .charts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      /* orders list */
+      .orders-list {
+        max-height: 420px;
+        overflow: auto;
+      }
+      .order-item {
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.02);
+        margin-bottom: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      /* import/export area */
+      .io-area {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      /* responsive */
+      @media (max-width: 980px) {
+        .container {
+          grid-template-columns: 1fr;
+          padding: 12px;
+        }
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <img src="logo.png" alt="Logo" />
+        <div>
+          <h1>Painel Admin — Pizzaria Bigfield</h1>
+          <div class="meta">
+            Modo Profissional • Configure faixas e visualize no mapa
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: center">
+        <div class="muted">Usuário: <strong>admin</strong></div>
+        <button id="btn-logout" class="btn ghost">Sair</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- SIDEBAR -->
+      <nav class="sidebar" role="navigation">
+        <button id="tab-dashboard" class="active">📊 Dashboard</button>
+        <button id="tab-orders">📦 Pedidos</button>
+        <button id="tab-delivery">🚚 Taxas de Entrega</button>
+        <button id="tab-products">🍕 Cardápio</button>
+        <button id="tab-settings">⚙️ Configurações</button>
+        <hr
+          style="
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            margin: 10px 0;
+          "
+        />
+        <div style="font-size: 0.85rem; color: var(--muted); margin-top: 8px">
+          Ações Rápidas
+        </div>
+        <div
+          style="
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          "
+        >
+          <div class="io-area">
+            <button id="export-config" class="btn ghost">
+              Exportar config
+            </button>
+            <button id="import-config" class="btn ghost">
+              Importar config
+            </button>
+          </div>
+          <div class="io-area">
+            <button id="export-products" class="btn ghost">
+              Exportar cardápio
+            </button>
+            <button id="import-products" class="btn ghost">
+              Importar cardápio
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAIN PANEL -->
+      <main class="panel">
+        <!-- DASHBOARD -->
+        <section id="panel-dashboard" class="card">
+          <div class="top-row">
+            <div class="left">
+              <h2 style="margin: 0">Dashboard</h2>
+              <div class="muted" style="margin-left: 12px">
+                Visão geral de pedidos e vendas
+              </div>
+            </div>
+            <div>
+              <button id="refresh-dashboard" class="btn ghost">
+                Atualizar
+              </button>
+              <button id="btn-simulate" class="btn">Simular Pedido</button>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div style="display: flex; gap: 12px">
+                <div class="metric" style="flex: 1">
+                  <h3 id="metric-orders">0</h3>
+                  <div class="small">Pedidos (hoje)</div>
+                </div>
+                <div class="metric" style="flex: 1">
+                  <h3 id="metric-top-pizza">—</h3>
+                  <div class="small">Pizza mais vendida</div>
+                </div>
+              </div>
+
+              <div class="charts" style="margin-top: 12px">
+                <div
+                  class="card"
+                  id="chart-orders-hour"
+                  style="min-height: 170px"
+                >
+                  Gráfico pedidos/hora (placeholder)
+                </div>
+                <div class="card" id="chart-sales" style="min-height: 170px">
+                  Gráfico vendas (placeholder)
+                </div>
+              </div>
+            </div>
+
+            <aside class="card">
+              <h3 style="margin-top: 0">Configuração Rápida</h3>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+                  margin-top: 8px;
+                "
+              >
+                <label
+                  >Nome da loja
+                  <input
+                    id="cfg-name"
+                    class="input"
+                    placeholder="Pizzaria Bigfield"
+                /></label>
+                <label
+                  >Tempo médio preparo (min)
+                  <input id="cfg-avg" class="input" type="number" min="1"
+                /></label>
+                <button id="save-quick-cfg" class="btn">Salvar</button>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ORDERS -->
+        <section id="panel-orders" class="card" style="display: none">
+          <div class="top-row">
+            <h2 style="margin: 0">Pedidos</h2>
+            <div>
+              <button id="btn-clear-orders" class="btn ghost">
+                Limpar Histórico
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="orders-list"
+            id="orders-list"
+            style="margin-top: 12px"
+          ></div>
+        </section>
+
+        <!-- DELIVERY CONFIG (MAP + FAIXAS + BAIRROS) -->
+        <section id="panel-delivery" class="card" style="display: none">
+          <div class="top-row">
+            <div class="left">
+              <h2 style="margin: 0">Taxas de Entrega</h2>
+              <div class="muted" style="margin-left: 12px">
+                Modo profissional — visualize faixas no mapa
+              </div>
+            </div>
+            <div>
+              <button id="btn-add-sample" class="btn ghost">
+                Adicionar exemplo
+              </button>
+              <button id="btn-clear-rings" class="btn ghost">
+                Remover círculos
+              </button>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <div class="map-wrap card">
+                <div id="admin-map" aria-hidden="false"></div>
+              </div>
+
+              <div
+                style="
+                  margin-top: 12px;
+                  display: flex;
+                  gap: 8px;
+                  align-items: center;
+                "
+              >
+                <label style="flex: 1">
+                  Centro (loja)
+                  <input
+                    id="cfg-address"
+                    class="input"
+                    placeholder="Endereço da loja"
+                  />
+                </label>
+                <button id="btn-geocode" class="btn ghost">Obter coords</button>
+              </div>
+            </div>
+
+            <aside>
+              <div class="card" style="margin-bottom: 12px">
+                <h3 style="margin-top: 0">Adicionar Faixa por Distância</h3>
+                <div
+                  style="
+                    display: flex;
+                    gap: 8px;
+                    align-items: center;
+                    margin-top: 8px;
+                  "
+                >
+                  <input
+                    id="tier-min"
+                    class="input"
+                    placeholder="min (ex: 0.15)"
+                    style="width: 90px"
+                  />
+                  <select id="tier-min-unit" class="input" style="width: 90px">
+                    <option value="km">km</option>
+                    <option value="m">m</option>
+                  </select>
+                  <input
+                    id="tier-max"
+                    class="input"
+                    placeholder="max (ex: 3)"
+                    style="width: 90px"
+                  />
+                  <select id="tier-max-unit" class="input" style="width: 90px">
+                    <option value="km">km</option>
+                    <option value="m">m</option>
+                  </select>
+                  <input
+                    id="tier-fee"
+                    class="input"
+                    placeholder="R$"
+                    style="width: 90px"
+                  />
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px">
+                  <button id="tier-add" class="btn">Adicionar faixa</button>
+                  <button id="tier-center" class="btn ghost">
+                    Centralizar mapa
+                  </button>
+                </div>
+              </div>
+
+              <div class="card" style="margin-bottom: 12px">
+                <h3 style="margin-top: 0">Bairros (taxa fixa)</h3>
+                <div
+                  id="nb-list"
+                  class="config-list"
+                  style="margin-top: 8px"
+                ></div>
+
+                <div style="display: flex; gap: 8px; margin-top: 8px">
+                  <input
+                    id="nb-name"
+                    class="input"
+                    placeholder="Nome (ex: Peixinhos)"
+                  />
+                  <input
+                    id="nb-keys"
+                    class="input"
+                    placeholder="keywords (ex: peixinhos,peixinho)"
+                  />
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px">
+                  <input
+                    id="nb-fee"
+                    class="input"
+                    placeholder="R$ (ex: 5.00)"
+                  />
+                  <button id="nb-add" class="btn">Adicionar</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3 style="margin-top: 0">Faixas Atuais</h3>
+                <div
+                  id="tiers-list"
+                  class="config-list"
+                  style="margin-top: 8px"
+                ></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- PRODUCTS (cardapio) -->
+        <section id="panel-products" class="card" style="display: none">
+          <div class="top-row">
+            <h2 style="margin: 0">Cardápio</h2>
+            <div>
+              <button id="btn-new-product" class="btn ghost">
+                Novo Produto
+              </button>
+              <button id="btn-refresh-products" class="btn ghost">
+                Atualizar preview
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start">
+            <div style="flex: 1">
+              <div id="product-list" class="card"></div>
+            </div>
+
+            <aside style="width: 420px">
+              <div class="card">
+                <h3 style="margin-top: 0">Editor de Produto</h3>
+                <form id="product-form">
+                  <input id="prd-id" type="hidden" />
+                  <label>Nome<br /><input id="prd-name" class="input" /></label>
+                  <label
+                    >Preço (R$)<br /><input
+                      id="prd-price"
+                      class="input"
+                      type="number"
+                      step="0.01"
+                  /></label>
+                  <label
+                    >Categoria<br /><input id="prd-category" class="input"
+                  /></label>
+                  <label
+                    >Descrição<br /><input id="prd-desc" class="input"
+                  /></label>
+                  <label
+                    >Imagem<br /><input
+                      id="prd-image-file"
+                      type="file"
+                      accept="image/*"
+                      class="input"
+                  /></label>
+                  <img
+                    id="image-preview"
+                    alt="preview"
+                    style="
+                      display: block;
+                      width: 100%;
+                      height: auto;
+                      margin-top: 8px;
+                      border-radius: 8px;
+                      object-fit: cover;
+                    "
+                  />
+                  <div style="display: flex; gap: 8px; margin-top: 8px">
+                    <button type="submit" class="btn">Salvar</button>
+                    <button type="button" id="btn-delete" class="btn ghost">
+                      Excluir
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </aside>
+          </div>
+
+          <div class="card" style="margin-top: 12px">
+            <h3 style="margin-top: 0">Preview JSON</h3>
+            <pre
+              id="json-preview"
+              style="
+                max-height: 240px;
+                overflow: auto;
+                background: #061016;
+                padding: 10px;
+                border-radius: 8px;
+              "
+            ></pre>
+          </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="panel-settings" class="card" style="display: none">
+          <div class="top-row">
+            <h2 style="margin: 0">Configurações</h2>
+            <div>
+              <button id="btn-clear-config" class="btn ghost">
+                Resetar config
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px">
+            <div style="flex: 1">
+              <h3>Configurações avançadas</h3>
+              <label
+                >Chave Google Maps (opcional — admin pode colar aqui)<br />
+                <input
+                  id="maps-key"
+                  class="input"
+                  placeholder="Se quiser sobrepor a chave embutida"
+                />
+              </label>
+              <div style="display: flex; gap: 8px; margin-top: 8px">
+                <button id="btn-save-maps-key" class="btn">Salvar chave</button>
+                <button id="btn-test-geocode" class="btn ghost">
+                  Testar Geocode
+                </button>
+              </div>
+            </div>
+
+            <aside style="width: 320px">
+              <h3>Status do BF Config</h3>
+              <pre
+                id="config-preview"
+                style="
+                  background: #061016;
+                  padding: 10px;
+                  border-radius: 8px;
+                  max-height: 220px;
+                  overflow: auto;
+                "
+              ></pre>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- hidden file inputs for import -->
+    <input
+      id="file-products"
+      type="file"
+      accept=".json"
+      style="display: none"
+    />
+    <input id="file-config" type="file" accept=".json" style="display: none" />
+
+    <!-- Admin script (will be provided next) -->
+    <script src="admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+[
+  {
+    "id": "frango_economica",
+    "name": "Frango",
+    "price": 28.0,
+    "category": "Pizzas Econômicas",
+    "image": "imgs/frango.webp"
+  },
+  {
+    "id": "mussarela",
+    "name": "Mussarela",
+    "price": 28.0,
+    "category": "Pizzas Econômicas",
+    "image": "imgs/mussarela.webp"
+  },
+  {
+    "id": "calabresa",
+    "name": "Calabresa",
+    "price": 28.0,
+    "category": "Pizzas Econômicas",
+    "image": "imgs/calabresa.webp"
+  },
+  {
+    "id": "presunto",
+    "name": "Presunto",
+    "price": 28.0,
+    "category": "Pizzas Econômicas",
+    "image": "imgs/presunto.webp"
+  },
+  {
+    "id": "marguerita",
+    "name": "Marguerita",
+    "price": 28.0,
+    "category": "Pizzas Econômicas",
+    "image": "imgs/marguerita.webp"
+  },
+  {
+    "id": "tres_queijos",
+    "name": "3 Queijos",
+    "price": 28.0,
+    "category": "Pizzas Econômicas",
+    "image": "imgs/3queijos.webp"
+  },
+  {
+    "id": "frango_catupiry",
+    "name": "Frango Catupiry",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/frangocatupiry.webp"
+  },
+  {
+    "id": "frango_cheddar",
+    "name": "Frango Cheddar",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/frangocheddar.webp"
+  },
+  {
+    "id": "frango_bacon",
+    "name": "Frango com Bacon",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/frangobacon.webp"
+  },
+  {
+    "id": "frango_bbq",
+    "name": "Frango Barbecue",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/frangobarbecue.webp"
+  },
+  {
+    "id": "calabresa_catupiry",
+    "name": "Calabresa Catupiry",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/calabresacatupiry.webp"
+  },
+  {
+    "id": "calabresa_cheddar",
+    "name": "Calabresa Cheddar",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/calabresacheddar.webp"
+  },
+  {
+    "id": "calabresa_bacon",
+    "name": "Calabresa com Bacon",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/calabresabacon.webp"
+  },
+  {
+    "id": "calabresa_bbq",
+    "name": "Calabresa com Barbecue",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/calabresabbq.webp"
+  },
+  {
+    "id": "bacon_milho",
+    "name": "Bacon e Milho",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/baconmilho.webp"
+  },
+  {
+    "id": "presunto_catupiry",
+    "name": "Presunto e Catupiry",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/presuntocatupiry.jpg"
+  },
+  {
+    "id": "presunto_cheddar",
+    "name": "Presunto e Cheddar",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/presuntocheddar.jpg"
+  },
+  {
+    "id": "presunto_bacon",
+    "name": "Presunto com Bacon",
+    "price": 30.0,
+    "category": "Pizzas Especiais",
+    "image": "imgs/presuntobacon.jpg"
+  },
+  {
+    "id": "brigadeiro",
+    "name": "Brigadeiro",
+    "price": 25.0,
+    "category": "Pizzas Doces",
+    "image": "imgs/brigadeiro.jpg"
+  },
+  {
+    "id": "churros",
+    "name": "Churros",
+    "price": 28.0,
+    "category": "Pizzas Doces",
+    "image": "imgs/webp/churros.webp"
+  },
+  {
+    "id": "romeu_julieta",
+    "name": "Romeu e Julieta",
+    "price": 28.0,
+    "category": "Pizzas Doces",
+    "image": "imgs/romeujulieta.jpg"
+  },
+  {
+    "id": "creme_avelã",
+    "name": "Creme de Avelã e M&M's",
+    "price": 28.0,
+    "category": "Pizzas Doces",
+    "image": "imgs/cremeavelamm.jpg"
+  },
+  {
+    "id": "nordestina",
+    "name": "Nordestina",
+    "price": 45.0,
+    "category": "Pizzas Big",
+    "image": "imgs/nordestina.jpg"
+  },
+  {
+    "id": "camarao_catupiry",
+    "name": "Camarão Catupiry",
+    "price": 37.0,
+    "category": "Pizzas Big",
+    "image": "imgs/camaraocatupiry.jpg"
+  },
+  {
+    "id": "pizzamodadacasa",
+    "name": "Pizza Moda da Casa",
+    "price": 35.0,
+    "category": "Pizzas Big",
+    "image": "imgs/mussarela.webp"
+  },
+  {
+    "id": "charque_frango",
+    "name": "Charque e Frango",
+    "price": 35.0,
+    "category": "Pizzas Big",
+    "image": "imgs/charquefrango.jpeg"
+  }
+]

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cardápio Delivery - Pizzaria Bigfield</title>
+
+    <!-- Fontes -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Estilo -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho -->
+    <header id="home-header">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <div class="logo-anim">
+          <img src="/Big Field Pizzaria/imgs/logobf.png" alt="Pizzaria Bigfield" id="logo-img" />
+          <h5>Pizzaria Big Field</h5>
+        </div>
+        <div style="display: flex; flex-direction: column"></div>
+      </div>
+      <div
+        id="mini-cart"
+        style="
+    color: #fff;
+    font-size: 0.9rem;
+    margin-left: auto;
+    background: #1c1c1c;
+    /* --- Borda Adicionada Corretamente --- */
+    border-style: solid; /* Define o estilo da borda, ex: 'solid' */
+    border-width: 1px;   /* Define a espessura da borda, ex: '1px' */
+    border-color: #ffb703; /* A cor que você já tinha */
+    /* ------------------------------------ */
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+"
+        onclick="openCart()"
+        onmouseover="this.style.background='#333'"
+        onmouseout="this.style.background='#1c1c1c'"
+      >
+        <div class="carrinho-info">
+          🛒
+          <span id="mini-total">R$ 0,00</span>
+        </div>
+      </div>
+      </div>
+    </header>
+
+    <!-- Categorias -->
+    <div id="categories" class="categories-row" aria-label="Categorias"></div>
+
+    <!-- Banner promocional -->
+    <div id="promo-banner" aria-live="polite">
+      <div
+        class="slide"
+        style="background: linear-gradient(90deg, #141414, #1f1f1f)"
+      >
+      🍕As melhores pizzas da região estão aqui! 
+      </div>
+      <div
+        class="slide"
+        style="background: linear-gradient(90deg, #121212, #171717)"
+      >
+      🎉Seja muito bem vindo(a)!
+      </div>
+      <div
+        class="slide"
+        style="background: linear-gradient(90deg, #0f0f0f, #151515)"
+      >
+        🔥 Mate sua fome aqui na Big Field.
+      </div>
+      <div id="promo-dots" class="promo-dots"></div>
+    </div>
+
+    <!-- Busca -->
+    <div class="search-wrap">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="🔍 Buscar no cardápio..."
+      />
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div id="main-content">
+      <main id="catalog" class="catalog-root"></main>
+    </div>
+
+    <!-- Fundo de blur -->
+    <div id="blur-overlay" aria-hidden="true"></div>
+
+    <!-- Painel do carrinho -->
+    <aside id="cart-panel" aria-hidden="true">
+      <div class="cart-header">
+        <h3>🛍️ Seu Carrinho</h3>
+        <a href="https://wa.me/5581985299617" class="support-btn">💬 Ajuda?</a>
+        <button id="close-cart" aria-label="Fechar">Fechar</button>
+      </div>
+
+      <div id="cart-items" class="cart-items"></div>
+
+      <div class="cart-footer">
+        <div class="totals">
+          <div class="total-row">
+            <span>Subtotal:</span><strong id="cart-subtotal">R$ 0,00</strong>
+          </div>
+          <div class="total-row">
+            <span>Desconto:</span><strong id="cart-discount">R$ 0,00</strong>
+          </div>
+          <div class="total-row">
+            <span>Total:</span><strong id="cart-total">R$ 0,00</strong>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 8px">
+          <input type="text" id="coupon-input" placeholder="Código de cupom" />
+          <button id="apply-coupon">Aplicar</button>
+        </div>
+        <div class="cart-actions">
+          <button id="clear-cart" class="btn-ghost">🧹 Limpar</button>
+          <button id="continue-shopping" class="btn-ghost">
+            ← Continuar Comprando
+          </button>
+          <button id="open-checkout" class="btn-primary">💬 Finalizar</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Modal de tipo de pedido -->
+    <div id="order-type-modal" aria-hidden="true">
+      <div class="modal-content">
+        <h2>Seu pedido será para...</h2>
+        <div class="order-options">
+          <button class="order-btn" data-type="Entrega">🚚 Entrega</button>
+          <button class="order-btn" data-type="Retirada">🏃‍♂️ Retirada</button>
+        </div>
+        <p
+          id="pickup-msg"
+          class="muted"
+          style="display: none; margin-top: 10px"
+        >
+          ⏱ Tempo de retirada: <strong>30 minutos</strong>.
+        </p>
+        <button
+          id="continue-checkout"
+          class="btn-success"
+          style="margin-top: 16px; width: 100%"
+        >
+          Seguir
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de checkout -->
+    <div id="checkout-modal" aria-hidden="true">
+      <div class="modal-content">
+        <h2>Finalizar Pedido</h2>
+        <p class="muted">
+          Informe seus dados para finalizar. A taxa de entrega (caso não seja
+          retirada) será informada via WhatsApp.
+        </p>
+
+        <input
+          type="text"
+          id="checkout-name"
+          placeholder="informe nome e sobrenome."
+        />
+        <input
+          type="text"
+          id="checkout-address"
+          placeholder="Endereço completo (ex: Rua X, 123)"
+        />
+
+        <select id="bairro-select">
+          <option value="">Clique aqui e selecione o bairro de entrega</option>
+          <option value="Campo Grande">Campo Grande - R$ 5,00</option>
+          <option value="Chão de Estrelas">Chão de Estrelas - R$ 6,00</option>
+          <option value="Arruda">Arruda - R$ 6,00</option>
+          <option value="Encruzilhada">Encruzilhada - R$ 6,00</option>
+          <option value="Sítio novo">Sítio novo - R$ 6,00</option>
+          <option value="Peixinhos">Peixinhos - R$ 7,00</option>
+          <option value="Espinheiro">Espinheiro - R$ 7,00</option>
+          <option value="Graças">Graças - R$ 8,00</option>
+          <option value="Santo Amaro">Santo Amaro - R$ 8,00</option>
+        </select>
+
+        <div id="resumo-container" style="margin-top: 10px"></div>
+
+        <div class="trust-badges">
+          🔒 Pagamento Seguro via WhatsApp | 📜 Política de Privacidade
+        </div>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+          "
+        >
+          <button id="close-checkout" class="btn-ghost" style="flex: 1">
+            Cancelar
+          </button>
+          <button id="confirm-send" class="btn-success" style="flex: 1">
+            Confirmar Pedido
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
+</html>
